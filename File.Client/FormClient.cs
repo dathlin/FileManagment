@@ -227,7 +227,7 @@ namespace File.Client
 
         private void userButton1_Click(object sender, EventArgs e)
         {
-            // 文件的删除不需要放在后台线程，前台即可处理，无论多少大的文件，都是很快删除的
+            // 文件的删除不需要放在后台线程，前台即可处理，无论多少大的文件，无论该文件是否在下载中，都是很快删除的
             OperateResult result = integrationFileClient.DeleteFile("123.txt", "Files", "Personal", "Admin");
             if(result.IsSuccess)
             {
@@ -235,6 +235,7 @@ namespace File.Client
             }
             else
             {
+                // 删除失败的原因除了一般的网络问题，还有因为服务器的文件不存在，会在Message里有显示。
                 MessageBox.Show("文件删除失败，原因：" + result.ToMessageShowString());
             }
         }
